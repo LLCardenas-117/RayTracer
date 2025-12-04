@@ -1,5 +1,7 @@
+#include "Camera.h"
 #include "Renderer.h"
 #include "Framebuffer.h"
+#include "Scene.h"
 
 #include <iostream>
 
@@ -14,9 +16,16 @@ int main() {
 
 	Framebuffer framebuffer(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	//framebuffer width divided by framebuffer height (float division)
+	float aspectRatio = framebuffer.width / framebuffer.height;
+	Camera camera(70.0f, aspectRatio);
+	camera.SetView({ 0, 0, 5 }, { 0, 0, 0 });
+
+	Scene scene;
+
 	SDL_Event event;
 	bool quit = false;
-	while (!quit) {
+			while (!quit) {
 		// check for exit events
 		while (SDL_PollEvent(&event)) {
 			// window (X) quit
@@ -31,7 +40,8 @@ int main() {
 
 		// draw to frame buffer
 		framebuffer.Clear({ 0, 0, 0, 255 });
-		for (int i = 0; i < 300; i++) framebuffer.DrawPoint(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, { 255, 255, 255, 255 });
+		//for (int i = 0; i < 300; i++) framebuffer.DrawPoint(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, { 255, 255, 255, 255 });
+		scene.Render(framebuffer, camera);
 
 		// update frame buffer, copy buffer pixels to texture
 		framebuffer.Update();
