@@ -2,7 +2,9 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
 #include "Scene.h"
-
+#include "Sphere.h"
+#include "Random.h"
+#include <glm/glm.hpp>
 #include <iostream>
 
 int main() {
@@ -22,6 +24,15 @@ int main() {
 	camera.SetView({ 0, 0, 5 }, { 0, 0, 0 });
 
 	Scene scene;
+	//scene.AddObject(<add the sphere into the scene, remember to move ownership>);
+	/*auto sphere = std::make_unique<Sphere>(glm::vec3{ 0, 0, 0 }, 2.0f, color3_t{ 1, 0, 0 });
+	scene.AddObject(std::move(sphere));*/
+
+	for (int i = 0; i < 5; i++) {
+		glm::vec3 position = random::getReal(glm::vec3{ -3.0f }, glm::vec3{ 3.0f });
+		auto sphere = std::make_unique<Sphere>(position, 0.25f, color3_t{ 1, 0, 0 });
+		scene.AddObject(std::move(sphere));
+	}
 
 	SDL_Event event;
 	bool quit = false;
@@ -41,7 +52,9 @@ int main() {
 		// draw to frame buffer
 		framebuffer.Clear({ 0, 0, 0, 255 });
 		//for (int i = 0; i < 300; i++) framebuffer.DrawPoint(rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, { 255, 255, 255, 255 });
-		scene.Render(framebuffer, camera);
+		//scene.Render(framebuffer, camera);
+
+		scene.Render(framebuffer, camera, 50);
 
 		// update frame buffer, copy buffer pixels to texture
 		framebuffer.Update();
