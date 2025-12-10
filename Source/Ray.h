@@ -30,5 +30,5 @@ struct raycastHit_t {
 
 	float distance;
 
-	color3_t color;
+	class Material* material;
 };

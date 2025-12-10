@@ -1,6 +1,7 @@
 #pragma once
 #include "Color.h"
 #include "Object.h"
+#include "Material.h"
 #include <vector>
 #include <memory>
 
