@@ -9,7 +9,7 @@ bool Sphere::Hit(const ray_t& ray, float minDistance, float maxDistance, raycast
     // for example: 3x + 5 <= the coefficient of x is 3
     float a = glm::dot(ray.direction, ray.direction); // dot product of ray direction and ray direction
     float b = 2 * glm::dot(ray.direction, oc); // 2 * dot product of ray.direction and oc
-    float c = glm::dot(oc, oc - (radius * radius)); // dot product of oc and oc - radius squared
+    float c = glm::dot(oc, oc) - (radius * radius); // dot product of oc and oc - radius squared
 
     // discriminant tells us how many real intersection points exist :
     // discriminant => b² - 4ac
@@ -37,7 +37,7 @@ bool Sphere::Hit(const ray_t& ray, float minDistance, float maxDistance, raycast
         }
         // if the nearest root wasn't valid, check the second one: t = (-b + sqrt(discriminant)) / (2a)
         // this is the farther intersection point where the ray exits the sphere.
-        t = (-b - sqrt(discriminant)) / (2 * a); //(-b + sqrt(discriminant)) / (2a)
+        t = (-b + sqrt(discriminant)) / (2 * a); //(-b + sqrt(discriminant)) / (2a)
         if (t > minDistance && t < maxDistance) {
             raycastHit.distance = t; // t is the distance
             raycastHit.point = ray.at(t); // use ray at(t)

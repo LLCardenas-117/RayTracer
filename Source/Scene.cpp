@@ -52,7 +52,6 @@ void Scene::Render(Framebuffer& framebuffer, const Camera& camera, int numSample
 			}
 			// get average color = (color / number samples)
 			color = color / (float)numSamples;
-			color = glm::sqrt(color);
 			framebuffer.DrawPoint(x, y, ColorConvert(color));
 		}
 		std::cout << y << std::endl;
@@ -91,7 +90,6 @@ color3_t Scene::Trace(const ray_t& ray, float minDistance, float maxDistance, in
 		}
 		else {
 			return raycastHit.material->GetEmissive();
-			//return raycastHit.material->
 		}
 	}
 
